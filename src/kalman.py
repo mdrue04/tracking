@@ -214,13 +214,13 @@ if __name__ == "__main__":
     ]
 
     objTracker = ObjectTracker()
-    object_lists = []
-    for t in range(1, 10):
-        objTracker.predict_objects(t)
+    object_lists_for_plots = []
+    for time in range(1, 10):
+        objTracker.predict_objects(time)
         for measurement in measurements:
-            if measurement[0].time == t:
+            if measurement[0].time == time:
                 objTracker.process_measurement(measurement)
         objTracker.print_objects()
-        object_lists.append(copy.deepcopy(objTracker.objects))
+        object_lists_for_plots.append(copy.deepcopy(objTracker.objects))
 
-    print_tracks(object_lists)
+    print_tracks(object_lists_for_plots)
