@@ -6,6 +6,8 @@ import copy
 
 
 class Association():
+    """Describes the relation between a measurement and a tracked object."""
+
     def __init__(self, obj_measurement, m_idx, obj, o_idx):
         self.distance = abs(
             obj_measurement.state[0] - obj.state[0])
@@ -14,6 +16,9 @@ class Association():
 
 
 class AssociationContainer():
+    """Calculates all information about the relations between one set of
+       measurements and the currently tracked objects."""
+
     def __init__(self):
         self.associations = []
         self.gating_distance = 2
@@ -55,6 +60,8 @@ class AssociationContainer():
 
 
 class ObjectTracker():
+    """Creates objects, tracks them and updates with incoming measurements."""
+
     def __init__(self):
         self.objects = []
         self.id_of_next_added_object = 1
@@ -90,6 +97,8 @@ class ObjectTracker():
 
 
 class InterfaceObject():
+    """Basic object description with all minimum required attributes."""
+
     def __init__(self, state, covariance, time):
         # State vector
         # position
@@ -104,6 +113,8 @@ class InterfaceObject():
 
 
 class KalmanTrackedObject(InterfaceObject):
+    """Object that is tracked through a Kalman filter."""
+
     def __init__(self, id, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.noise_per_time = np.array([[0.2, 0.1]])
@@ -147,6 +158,7 @@ Covariance:\n{self.covariance}
 
 
 def get_tracks(object_lists):
+    """Extracts the (position) tracks of the tracked objects."""
     object_lists = [o for o in object_lists if o]
     times = [obj_list[0].time for obj_list in object_lists]
     tracks = []
@@ -169,6 +181,7 @@ def get_tracks(object_lists):
 
 
 def print_tracks(object_lists):
+    """Creates plot with all object tracks."""
     tracks = get_tracks(object_lists)
     for track in tracks:
         plt.errorbar(
