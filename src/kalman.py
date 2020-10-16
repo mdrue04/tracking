@@ -180,7 +180,7 @@ def get_tracks(object_lists):
     return tracks
 
 
-def print_tracks(object_lists):
+def plot_tracks(object_lists):
     """Creates plot with all object tracks."""
     tracks = get_tracks(object_lists)
     for track in tracks:
@@ -194,6 +194,7 @@ def print_tracks(object_lists):
 
 
 if __name__ == "__main__":
+    # Input measurements of objects
     measurements = [
         [
             InterfaceObject(
@@ -217,10 +218,11 @@ if __name__ == "__main__":
     object_lists_for_plots = []
     for time in range(1, 10):
         objTracker.predict_objects(time)
+        # If measurement corresponds to time step, process it
         for measurement in measurements:
             if measurement[0].time == time:
                 objTracker.process_measurement(measurement)
         objTracker.print_objects()
         object_lists_for_plots.append(copy.deepcopy(objTracker.objects))
 
-    print_tracks(object_lists_for_plots)
+    plot_tracks(object_lists_for_plots)
